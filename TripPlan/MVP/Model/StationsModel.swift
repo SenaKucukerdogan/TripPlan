@@ -6,3 +6,32 @@
 //
 
 import Foundation
+
+struct StationsModel: Codable {
+    
+    let centerCoordinates: String
+    let id: Int
+    let name: String
+    let trips: [Trip]
+    let tripsCount: Int
+    
+    private enum CodingKeys: String, CodingKey {
+        case centerCoordinates = "center_coordinates"
+        case id
+        case name
+        case trips
+        case tripsCount = "trips_count"
+    }
+}
+
+struct Trip: Codable {
+    let busName: String
+    let id: Int
+    let time: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case busName = "bus_name"
+        case id
+        case time
+    }
+}
