@@ -97,7 +97,6 @@
 				A68A1A242A3A37DC00B3010A /* ListView */,
 				A68A1A0C2A3A1A5F00B3010A /* Main.storyboard */,
 				A68A1A112A3A1A6000B3010A /* LaunchScreen.storyboard */,
-				A68A1A0A2A3A1A5F00B3010A /* ViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -113,6 +112,7 @@
 		A68A1A242A3A37DC00B3010A /* ListView */ = {
 			isa = PBXGroup;
 			children = (
+				A68A1A0A2A3A1A5F00B3010A /* ViewController.swift */,
 				A68A1A202A3A1DA300B3010A /* TripsListViewController.swift */,
 				A68A1A252A3A380E00B3010A /* TripListViewTableViewCell.swift */,
 			);

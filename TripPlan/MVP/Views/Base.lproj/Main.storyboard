@@ -17,32 +17,64 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gDI-e7-K4q">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gDI-e7-K4q">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <standardMapConfiguration key="preferredConfiguration"/>
                             </mapView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Point" translatesAutoresizingMaskIntoConstraints="NO" id="oRj-XO-oqF">
-                                <rect key="frame" x="186.66666666666666" y="416" width="20" height="20"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YUY-RY-FuQ">
+                                <rect key="frame" x="46.666666666666657" y="728" width="300" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="GW9-59-aeU"/>
-                                    <constraint firstAttribute="width" constant="20" id="nKl-lg-Jx9"/>
+                                    <constraint firstAttribute="width" constant="300" id="Ibf-nB-ob5"/>
+                                    <constraint firstAttribute="height" constant="40" id="qBY-cA-7MV"/>
                                 </constraints>
-                            </imageView>
+                                <buttonConfiguration key="configuration" style="filled" cornerStyle="capsule">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="List">
+                                            <attributes>
+                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <font key="NSFont" size="20" name="Arial-BoldMT"/>
+                                                <font key="NSOriginalFont" size="18" name="Symbol"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content=" ">
+                                            <attributes>
+                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <font key="NSFont" size="20" name="Arial-BoldMT"/>
+                                                <font key="NSOriginalFont" size="12" name="Helvetica"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                        <fragment content="Trips">
+                                            <attributes>
+                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <font key="NSFont" size="20" name="Arial-BoldMT"/>
+                                                <font key="NSOriginalFont" size="18" name="Symbol"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <color key="baseBackgroundColor" red="0.088587375080000003" green="0.1143005911" blue="0.59917534719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="listTripsButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UFZ-7N-PP5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="gDI-e7-K4q" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="8RE-x6-eEb"/>
-                            <constraint firstItem="oRj-XO-oqF" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="OtU-Ry-5lr"/>
-                            <constraint firstItem="oRj-XO-oqF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="YZK-99-2ce"/>
                             <constraint firstItem="gDI-e7-K4q" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Ykl-1G-Fea"/>
+                            <constraint firstItem="YUY-RY-FuQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hjC-0A-DjJ"/>
                             <constraint firstItem="gDI-e7-K4q" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="nMY-ZM-xeY"/>
                             <constraint firstItem="gDI-e7-K4q" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="r4E-FL-hix"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="YUY-RY-FuQ" secondAttribute="bottom" constant="50" id="ymL-DX-631"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="listTripsButton" destination="YUY-RY-FuQ" id="Kty-Rm-yk9"/>
                         <outlet property="mapView" destination="gDI-e7-K4q" id="2LF-Rg-9lv"/>
-                        <outlet property="pointImageView" destination="oRj-XO-oqF" id="Hh5-0I-8ik"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -140,7 +172,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Point" width="31" height="31"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
