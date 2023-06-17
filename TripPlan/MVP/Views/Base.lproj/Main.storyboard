@@ -93,7 +93,7 @@
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="79" id="mge-SO-S0c" customClass="TripListViewTableViewCell" customModule="TripPlan" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TripListViewCell" rowHeight="79" id="mge-SO-S0c" customClass="TripListViewTableViewCell" customModule="TripPlan" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="393" height="79"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mge-SO-S0c" id="14i-Qb-dCx">
@@ -133,12 +133,18 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="far-OO-MP6" firstAttribute="top" secondItem="14i-Qb-dCx" secondAttribute="topMargin" constant="16" id="FIW-bP-um1"/>
+                                                <constraint firstItem="DM1-p9-c1t" firstAttribute="top" secondItem="14i-Qb-dCx" secondAttribute="topMargin" constant="14" id="Jc6-2G-7bM"/>
                                                 <constraint firstItem="far-OO-MP6" firstAttribute="leading" secondItem="14i-Qb-dCx" secondAttribute="leadingMargin" constant="5" id="MdX-Up-K5c"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="fQG-hR-ShD" secondAttribute="bottom" constant="16" id="Vch-Vj-JEp"/>
                                                 <constraint firstItem="fQG-hR-ShD" firstAttribute="centerY" secondItem="14i-Qb-dCx" secondAttribute="centerY" id="ZGO-rq-bch"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="far-OO-MP6" secondAttribute="bottom" constant="16" id="Zdt-fg-zaO"/>
                                                 <constraint firstItem="DM1-p9-c1t" firstAttribute="leading" secondItem="fQG-hR-ShD" secondAttribute="trailing" constant="20" id="arR-A5-K83"/>
+                                                <constraint firstItem="fQG-hR-ShD" firstAttribute="top" secondItem="14i-Qb-dCx" secondAttribute="topMargin" constant="16" id="dhk-WT-PWF"/>
                                                 <constraint firstItem="far-OO-MP6" firstAttribute="centerY" secondItem="14i-Qb-dCx" secondAttribute="centerY" id="fK6-OQ-7EB"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="DM1-p9-c1t" secondAttribute="trailing" constant="5" id="fR0-o2-qb6"/>
                                                 <constraint firstItem="DM1-p9-c1t" firstAttribute="centerY" secondItem="14i-Qb-dCx" secondAttribute="centerY" id="fR7-8L-Jfq"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="DM1-p9-c1t" secondAttribute="bottom" constant="14" id="uVO-Er-MOS"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -162,13 +168,14 @@
                             <constraint firstItem="WJ7-4d-OdU" firstAttribute="top" secondItem="160-aR-H9j" secondAttribute="top" id="ibV-zn-z9o"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="Iys-e7-ngw"/>
                     <connections>
                         <outlet property="mTableView" destination="WJ7-4d-OdU" id="5z0-eQ-DJM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2nQ-sR-x6W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="866" y="5"/>
+            <point key="canvasLocation" x="952" y="5"/>
         </scene>
     </scenes>
     <resources>

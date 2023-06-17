@@ -11,10 +11,17 @@ import MapKit
 class ViewController: UIViewController, CLLocationManagerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
-    
     @IBOutlet weak var listTripsButton: UIButton!
     
     let locationManager = CLLocationManager()
+    let stationsManager = StationsManager()
+    
+    var centerCoordinates = String()
+    var tripsCount = 0
+    var latitude = String()
+    var longitude = String()
+    var id = Int()
+    var data = [StationsModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,13 +37,41 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         mapView.showsUserLocation = true
         
-        addAnnotation()
-        
         listTripsButton.isHidden = true
+        
+        fetchData()
+
+    }
+    
+    func fetchData() {
+        stationsManager.fetchStations { [weak self] result in
+            switch result {
+            case .success(let data):
+                DispatchQueue.main.async {
+                    self?.data = data
+                    self?.addAnnotation(data: data)
+                }
+            case .failure(let error):
+                print("Error: \(error)")
+            }
+        }
     }
     
     @IBAction func listTripsButton(_ sender: Any) {
         
+    }
+    
+    func parseCenterCoordinates(centerCoordinates: String) -> (String, String){
+        let components = centerCoordinates.components(separatedBy: ",")
+        
+        if components.count == 2 {
+            latitude = components[0] // Value before the comma
+            longitude = components[1] // Value after the comma
+
+        } else {
+            print("Invalid string format")
+        }
+        return (latitude, longitude)
     }
     
 
@@ -46,7 +81,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 extension ViewController: MKMapViewDelegate{
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.008, longitudeDelta: 0.008))
+        let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
         
         mapView.setRegion(region, animated: false)
     }
@@ -83,12 +118,17 @@ extension ViewController: MKMapViewDelegate{
         }
     }
     
-    func addAnnotation(){
+    func addAnnotation(data: [StationsModel]){
+        data.forEach { dataType in
+            let annotation = MKPointAnnotation()
+            id = dataType.id
+            latitude = parseCenterCoordinates(centerCoordinates: dataType.centerCoordinates).0
+            longitude = parseCenterCoordinates(centerCoordinates: dataType.centerCoordinates).1
+            annotation.coordinate = CLLocationCoordinate2D(latitude: Double(latitude) ?? 0.0, longitude: Double(longitude) ?? 0.0) //modelden çekilecek
+            annotation.title = "\(dataType.tripsCount) Trips" // modelden trip count çekilecek
+            mapView.addAnnotation(annotation) // array tanımlanacak
+        }
         
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = CLLocationCoordinate2D(latitude: 40.98496675, longitude: 29.101067799999996) //modelden çekilecek
-        annotation.title = "9 Trips" // modelden trip count çekilecek
-        mapView.addAnnotation(annotation) // array tanımlanacak
     }
     
 }
