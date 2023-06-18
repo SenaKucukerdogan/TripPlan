@@ -13,16 +13,7 @@ class ViewController: UIViewController, TripsListViewControllerDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var listTripsButton: UIButton!
  
-    
-    private lazy var locationManager : CLLocationManager = {
-        let manager = CLLocationManager()
-        manager.delegate = self
-        manager.requestWhenInUseAuthorization()
-        manager.desiredAccuracy = kCLLocationAccuracyBest
-        manager.distanceFilter = kCLDistanceFilterNone
-        manager.startUpdatingLocation()
-        return manager
-    }()
+    let manager = CLLocationManager()
     
     private lazy var stationsManager : StationsManager = {
         return StationsManager()
@@ -44,15 +35,20 @@ class ViewController: UIViewController, TripsListViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureMapView()
-        fetchData()
+        manager.delegate = self
+        manager.requestWhenInUseAuthorization()
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.distanceFilter = kCLDistanceFilterNone
+        manager.startUpdatingLocation()
         
-        listTripsButton.isHidden = true
-    }
-    
-    private func configureMapView(){
         mapView.delegate = self
         mapView.showsUserLocation = true
+        
+        listTripsButton.isHidden = true
+        
+        fetchData()
+        
+
     }
     
     //MARK: - Data Fetching
@@ -111,16 +107,12 @@ class ViewController: UIViewController, TripsListViewControllerDelegate {
     }
 }
 
-
-extension ViewController: CLLocationManagerDelegate{
+extension ViewController: MKMapViewDelegate, CLLocationManagerDelegate{
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+        let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.08, longitudeDelta: 0.08))
         mapView.setRegion(region, animated: false)
     }
-}
-
-
-extension ViewController: MKMapViewDelegate{
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return nil
