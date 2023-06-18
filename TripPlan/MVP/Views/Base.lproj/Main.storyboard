@@ -58,6 +58,7 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="listTripsButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UFZ-7N-PP5"/>
+                                    <segue destination="ZSv-E2-lcQ" kind="show" identifier="TripsListViewControllerSegue" id="Zs9-GR-o4c"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -72,6 +73,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="YUY-RY-FuQ" secondAttribute="bottom" constant="50" id="ymL-DX-631"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="SV9-9z-opq"/>
                     <connections>
                         <outlet property="listTripsButton" destination="YUY-RY-FuQ" id="Kty-Rm-yk9"/>
                         <outlet property="mapView" destination="gDI-e7-K4q" id="2LF-Rg-9lv"/>
@@ -79,18 +81,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="135.1145038167939" y="4.9295774647887329"/>
+            <point key="canvasLocation" x="1061.8320610687022" y="4.9295774647887329"/>
         </scene>
         <!--Trips List View Controller-->
         <scene sceneID="H2j-ZS-tUG">
             <objects>
                 <viewController id="ZSv-E2-lcQ" customClass="TripsListViewController" customModule="TripPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="v8b-yJ-Snu">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="WJ7-4d-OdU">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TripListViewCell" rowHeight="79" id="mge-SO-S0c" customClass="TripListViewTableViewCell" customModule="TripPlan" customModuleProvider="target">
@@ -175,7 +177,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2nQ-sR-x6W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="952" y="5"/>
+            <point key="canvasLocation" x="1847" y="5"/>
         </scene>
     </scenes>
     <resources>

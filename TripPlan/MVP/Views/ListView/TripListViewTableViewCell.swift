@@ -7,11 +7,16 @@
 
 import UIKit
 
+protocol TripListViewCellDelegate: AnyObject {
+    func bookButtonTapped(for cell: TripListViewTableViewCell)
+}
+
 class TripListViewTableViewCell: UITableViewCell {
 
     @IBOutlet weak var busNameLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     
+    weak var delegate: TripListViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,6 +30,7 @@ class TripListViewTableViewCell: UITableViewCell {
     }
     
     @IBAction func bookButton(_ sender: Any) {
+        delegate?.bookButtonTapped(for: self)
     }
     
 

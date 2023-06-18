@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, TripsListViewControllerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var listTripsButton: UIButton!
@@ -20,8 +20,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var tripsCount = 0
     var latitude = String()
     var longitude = String()
-    var id = Int()
-    var data = [StationsModel]()
+    var annotationId = Int()
+    var stationsModelData = [StationsModel]()
+    var selectedAnnotationId: Int? = 0
+    
+    var selectedAnnotationView: MKAnnotationView?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,12 +47,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
     }
     
+    func didBookTrip() {
+        
+        self.dismiss(animated: true, completion: nil)
+        selectedAnnotationView?.image = UIImage(named: "Completed")
+    }
+    
+    
     func fetchData() {
         stationsManager.fetchStations { [weak self] result in
             switch result {
             case .success(let data):
                 DispatchQueue.main.async {
-                    self?.data = data
+                    self?.stationsModelData = data
                     self?.addAnnotation(data: data)
                 }
             case .failure(let error):
@@ -58,7 +69,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func listTripsButton(_ sender: Any) {
-        
+        performSegue(withIdentifier: "TripsListViewControllerSegue", sender: sender)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        if segue.identifier == "TripsListViewControllerSegue"{
+            if let destination = segue.destination as? TripsListViewController{
+                destination.modalPresentationStyle = .fullScreen
+                destination.tripsData = stationsModelData
+                destination.tripId = selectedAnnotationId
+                destination.delegate = self
+            }
+        }
     }
     
     func parseCenterCoordinates(centerCoordinates: String) -> (String, String){
@@ -111,17 +133,39 @@ extension ViewController: MKMapViewDelegate{
     }
     
     @objc private func annotationTapped(_ sender: UITapGestureRecognizer) {
-        if let annotationView = sender.view as? MKAnnotationView {
-
-            annotationView.image = UIImage(named: "Selected Point")
-            listTripsButton.isHidden = false
+        if let annotationView = sender.view as? MKAnnotationView,
+           let annotation = annotationView.annotation as? MKPointAnnotation {
+            
+            if let previousSelectedAnnotationView = selectedAnnotationView {
+                previousSelectedAnnotationView.image = UIImage(named: "Point")
+                
+            }
+            
+            if annotationView == selectedAnnotationView {
+                annotationView.image = UIImage(named: "Point")
+                annotation.title = ""
+                listTripsButton.isHidden = true
+                selectedAnnotationView = nil
+                selectedAnnotationId = nil
+                
+            } else {
+                annotationView.image = UIImage(named: "Selected Point")
+                listTripsButton.isHidden = false
+                
+                if let selectedAnnotation = stationsModelData.first(where: {$0.centerCoordinates == "\(annotation.coordinate.latitude),\(annotation.coordinate.longitude)" }) {
+                    selectedAnnotationId = selectedAnnotation.id
+                    annotation.title = "\(selectedAnnotation.tripsCount) Trips"
+                }
+                
+                selectedAnnotationView = annotationView
+            }
         }
     }
-    
+
     func addAnnotation(data: [StationsModel]){
-        data.forEach { dataType in
+        stationsModelData.forEach { dataType in
             let annotation = MKPointAnnotation()
-            id = dataType.id
+            annotationId = dataType.id
             latitude = parseCenterCoordinates(centerCoordinates: dataType.centerCoordinates).0
             longitude = parseCenterCoordinates(centerCoordinates: dataType.centerCoordinates).1
             annotation.coordinate = CLLocationCoordinate2D(latitude: Double(latitude) ?? 0.0, longitude: Double(longitude) ?? 0.0) //modelden çekilecek
