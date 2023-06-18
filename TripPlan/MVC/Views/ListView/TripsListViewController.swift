@@ -11,7 +11,6 @@ protocol TripsListViewControllerDelegate: AnyObject {
     func didBookTrip()
 }
 
-
 class TripsListViewController: UIViewController {
     
     @IBOutlet weak var mTableView: UITableView!
@@ -27,11 +26,11 @@ class TripsListViewController: UIViewController {
         super.viewDidLoad()
 
     }
-
 }
+
+ //MARK: - TableView Delegations
 extension TripsListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
         if let id = tripId, let filteredData = tripsData?.first(where: { $0.id == id }){
             return filteredData.tripsCount
         }
@@ -50,12 +49,11 @@ extension TripsListViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return cell
     }
-    
 }
 
+//MARK: - TableviewCell Delegation
+
 extension TripsListViewController: TripListViewCellDelegate {
-    
-    
     func bookButtonTapped(for cell: TripListViewTableViewCell) {
         guard let indexPath = mTableView.indexPath(for: cell),
               let tripData = tripsData?.first(where: { $0.id == tripId }),
@@ -66,9 +64,10 @@ extension TripsListViewController: TripListViewCellDelegate {
         let trip = tripData.trips[indexPath.row]
         let stationId = tripData.id
         let id = trip.id
+        
         stationsManager.fetchTripData(stationId: stationId, tripId: id) { result in
             switch result {
-            case .success( _):
+            case .success:
                 // write for image
                 DispatchQueue.main.async {
                     let alert = UIAlertController(title: "Success", message: "Trip booked successfully!", preferredStyle: .alert)
@@ -80,7 +79,7 @@ extension TripsListViewController: TripListViewCellDelegate {
                     self.present(alert, animated: true, completion: nil)
                 }
              
-            case .failure( _):
+            case .failure:
                 DispatchQueue.main.async {
                     let alert = UIAlertController(title: "The trip you selected is full.", message: "Please select another one.", preferredStyle: .alert)
                     let okAction = UIAlertAction(title: "Select a Trip", style: .default, handler: nil)

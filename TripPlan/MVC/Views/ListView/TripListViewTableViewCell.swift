@@ -19,14 +19,11 @@ class TripListViewTableViewCell: UITableViewCell {
     weak var delegate: TripListViewCellDelegate?
     
     override func awakeFromNib() {
-        super.awakeFromNib()
-        
+        super.awakeFromNib()        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        
     }
     
     @IBAction func bookButton(_ sender: Any) {

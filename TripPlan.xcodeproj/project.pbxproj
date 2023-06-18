@@ -45,6 +45,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A6190D592A3FA5CE0097ED5A /* DefaultManager */ = {
+			isa = PBXGroup;
+			children = (
+				A68A1A062A3A1A5F00B3010A /* AppDelegate.swift */,
+				A68A1A082A3A1A5F00B3010A /* SceneDelegate.swift */,
+			);
+			path = DefaultManager;
+			sourceTree = "<group>";
+		};
 		A68A19FA2A3A1A5F00B3010A = {
 			isa = PBXGroup;
 			children = (
@@ -64,31 +73,30 @@
 		A68A1A052A3A1A5F00B3010A /* TripPlan */ = {
 			isa = PBXGroup;
 			children = (
-				A68A1A1A2A3A1C5800B3010A /* MVP */,
+				A68A1A1A2A3A1C5800B3010A /* MVC */,
 				A68A1A0F2A3A1A6000B3010A /* Assets.xcassets */,
 				A68A1A142A3A1A6000B3010A /* Info.plist */,
 			);
 			path = TripPlan;
 			sourceTree = "<group>";
 		};
-		A68A1A1A2A3A1C5800B3010A /* MVP */ = {
+		A68A1A1A2A3A1C5800B3010A /* MVC */ = {
 			isa = PBXGroup;
 			children = (
-				A68A1A062A3A1A5F00B3010A /* AppDelegate.swift */,
-				A68A1A082A3A1A5F00B3010A /* SceneDelegate.swift */,
 				A68A1A1D2A3A1C7F00B3010A /* Model */,
 				A68A1A1C2A3A1C7000B3010A /* Views */,
-				A68A1A1B2A3A1C6300B3010A /* Presenter */,
+				A68A1A1B2A3A1C6300B3010A /* Controller */,
 			);
-			path = MVP;
+			path = MVC;
 			sourceTree = "<group>";
 		};
-		A68A1A1B2A3A1C6300B3010A /* Presenter */ = {
+		A68A1A1B2A3A1C6300B3010A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A6190D592A3FA5CE0097ED5A /* DefaultManager */,
 				A68A1A222A3A1E5B00B3010A /* StationsManager.swift */,
 			);
-			path = Presenter;
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		A68A1A1C2A3A1C7000B3010A /* Views */ = {

@@ -7,12 +7,11 @@
 
 import Foundation
 
-//https://demo.voltlines.com/case-study/6/stations
-
-
 class StationsManager{
-        
-    func fetchStations(completion: @escaping (Result<[StationsModel], Error>)->()){
+    
+    //MARK: - Fetch The Annotations for on Map
+    
+    func fetchStations(completion: @escaping (Result<[StationsModel], Error>) -> Void){
         guard let url = URL(string: "https://demo.voltlines.com/case-study/6/stations") else { return }
         
         let task = URLSession.shared.dataTask(with: url) { data, _, error in
@@ -30,11 +29,11 @@ class StationsManager{
             } catch {
                 completion(.failure(error))
             }
-            
         }
         task.resume()
     }
     
+    //MARK: - Fetch Data Book from TableviewCell
     func fetchTripData(stationId: Int, tripId: Int, completion: @escaping (Result<Data, Error>) -> Void) {
         
         guard let url = URL(string: "https://demo.voltlines.com/case-study/6/stations/\(stationId)/trips/\(tripId)") else {
@@ -49,14 +48,13 @@ class StationsManager{
                 "key2": "value2"
             ]
         do {
-                request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
-            } catch {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+        } catch {
                 print("Error creating request body: \(error)")
                 return
-            }
+        }
         
         let configuration = URLSessionConfiguration.default
-        
         let session = URLSession(configuration: configuration)
         
         let task = session.dataTask(with: request) { data, response, error in
@@ -76,6 +74,6 @@ class StationsManager{
                     }
                 }
             }
-            task.resume()
+        task.resume()
     }
 }

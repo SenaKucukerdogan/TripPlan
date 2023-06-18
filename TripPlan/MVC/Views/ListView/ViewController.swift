@@ -8,53 +8,56 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController, CLLocationManagerDelegate, TripsListViewControllerDelegate {
+class ViewController: UIViewController, TripsListViewControllerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var listTripsButton: UIButton!
+ 
     
-    let locationManager = CLLocationManager()
-    let stationsManager = StationsManager()
+    private lazy var locationManager : CLLocationManager = {
+        let manager = CLLocationManager()
+        manager.delegate = self
+        manager.requestWhenInUseAuthorization()
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.distanceFilter = kCLDistanceFilterNone
+        manager.startUpdatingLocation()
+        return manager
+    }()
     
-    var centerCoordinates = String()
-    var tripsCount = 0
-    var latitude = String()
-    var longitude = String()
-    var annotationId = Int()
-    var stationsModelData = [StationsModel]()
-    var selectedAnnotationId: Int? = 0
+    private lazy var stationsManager : StationsManager = {
+        return StationsManager()
+    }()
     
-    var selectedAnnotationView: MKAnnotationView?
+    
+    private var centerCoordinates = String()
+    private var latitude = String()
+    private var longitude = String()
+    private var annotationId = Int()
+    private var tripsCount = 0
+    private var selectedAnnotationId: Int? = 0
+    private var stationsModelData = [StationsModel]()
+    
+    private var selectedAnnotationView: MKAnnotationView?
 
+    //MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mapView.delegate = self
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = kCLDistanceFilterNone
-        
-        locationManager.startUpdatingLocation()
-        
-        mapView.showsUserLocation = true
+        configureMapView()
+        fetchData()
         
         listTripsButton.isHidden = true
-        
-        fetchData()
-
     }
     
-    func didBookTrip() {
-        
-        self.dismiss(animated: true, completion: nil)
-        selectedAnnotationView?.image = UIImage(named: "Completed")
+    private func configureMapView(){
+        mapView.delegate = self
+        mapView.showsUserLocation = true
     }
     
+    //MARK: - Data Fetching
     
-    func fetchData() {
+    private func fetchData() {
         stationsManager.fetchStations { [weak self] result in
             switch result {
             case .success(let data):
@@ -67,6 +70,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, TripsListView
             }
         }
     }
+    
+    // MARK: - Actions
     
     @IBAction func listTripsButton(_ sender: Any) {
         performSegue(withIdentifier: "TripsListViewControllerSegue", sender: sender)
@@ -83,31 +88,39 @@ class ViewController: UIViewController, CLLocationManagerDelegate, TripsListView
         }
     }
     
-    func parseCenterCoordinates(centerCoordinates: String) -> (String, String){
+    // MARK: - Helper Methods
+    
+    private func parseCenterCoordinates(_ centerCoordinates: String) -> (String, String){
         let components = centerCoordinates.components(separatedBy: ",")
         
         if components.count == 2 {
             latitude = components[0] // Value before the comma
             longitude = components[1] // Value after the comma
-
+            return (latitude, longitude)
         } else {
             print("Invalid string format")
+            return("","")
         }
-        return (latitude, longitude)
     }
     
-
-
+    // MARK: - Trip Booking Delegate
+    
+    func didBookTrip() {
+        self.dismiss(animated: true, completion: nil)
+        selectedAnnotationView?.image = UIImage(named: "Completed")
+    }
 }
 
-extension ViewController: MKMapViewDelegate{
-    
+
+extension ViewController: CLLocationManagerDelegate{
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
-        
         mapView.setRegion(region, animated: false)
     }
-    
+}
+
+
+extension ViewController: MKMapViewDelegate{
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return nil
@@ -125,10 +138,8 @@ extension ViewController: MKMapViewDelegate{
             stationAnnotationView?.annotation = annotation
         }
         
-        
-        stationAnnotationView?.image = UIImage(named: "Point") // notation a tıklanınca image değişecek ve buton açılacak
+        stationAnnotationView?.image = UIImage(named: "Point")
     
-
         return stationAnnotationView
     }
     
@@ -138,7 +149,6 @@ extension ViewController: MKMapViewDelegate{
             
             if let previousSelectedAnnotationView = selectedAnnotationView {
                 previousSelectedAnnotationView.image = UIImage(named: "Point")
-                
             }
             
             if annotationView == selectedAnnotationView {
@@ -163,17 +173,16 @@ extension ViewController: MKMapViewDelegate{
     }
 
     func addAnnotation(data: [StationsModel]){
-        stationsModelData.forEach { dataType in
+        data.forEach { stationData in
             let annotation = MKPointAnnotation()
-            annotationId = dataType.id
-            latitude = parseCenterCoordinates(centerCoordinates: dataType.centerCoordinates).0
-            longitude = parseCenterCoordinates(centerCoordinates: dataType.centerCoordinates).1
-            annotation.coordinate = CLLocationCoordinate2D(latitude: Double(latitude) ?? 0.0, longitude: Double(longitude) ?? 0.0) //modelden çekilecek
-            annotation.title = "\(dataType.tripsCount) Trips" // modelden trip count çekilecek
-            mapView.addAnnotation(annotation) // array tanımlanacak
+            annotationId = stationData.id
+            let (latitude, longitude) = parseCenterCoordinates(stationData.centerCoordinates)
+            if let latitude = Double(latitude), let longitude = Double(longitude){
+                annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            }
+            annotation.title = "\(stationData.tripsCount) Trips"
+            mapView.addAnnotation(annotation)
         }
-        
     }
-    
 }
 
