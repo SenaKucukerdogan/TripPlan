@@ -15,7 +15,7 @@
 		A68A1A132A3A1A6000B3010A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A68A1A112A3A1A6000B3010A /* LaunchScreen.storyboard */; };
 		A68A1A1F2A3A1D4700B3010A /* StationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68A1A1E2A3A1D4700B3010A /* StationsModel.swift */; };
 		A68A1A212A3A1DA300B3010A /* TripsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68A1A202A3A1DA300B3010A /* TripsListViewController.swift */; };
-		A68A1A232A3A1E5B00B3010A /* StationsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68A1A222A3A1E5B00B3010A /* StationsPresenter.swift */; };
+		A68A1A232A3A1E5B00B3010A /* StationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68A1A222A3A1E5B00B3010A /* StationsManager.swift */; };
 		A68A1A262A3A380E00B3010A /* TripListViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68A1A252A3A380E00B3010A /* TripListViewTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -30,7 +30,7 @@
 		A68A1A142A3A1A6000B3010A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A68A1A1E2A3A1D4700B3010A /* StationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsModel.swift; sourceTree = "<group>"; };
 		A68A1A202A3A1DA300B3010A /* TripsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripsListViewController.swift; sourceTree = "<group>"; };
-		A68A1A222A3A1E5B00B3010A /* StationsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsPresenter.swift; sourceTree = "<group>"; };
+		A68A1A222A3A1E5B00B3010A /* StationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsManager.swift; sourceTree = "<group>"; };
 		A68A1A252A3A380E00B3010A /* TripListViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripListViewTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -45,6 +45,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A6190D592A3FA5CE0097ED5A /* DefaultManager */ = {
+			isa = PBXGroup;
+			children = (
+				A68A1A062A3A1A5F00B3010A /* AppDelegate.swift */,
+				A68A1A082A3A1A5F00B3010A /* SceneDelegate.swift */,
+			);
+			path = DefaultManager;
+			sourceTree = "<group>";
+		};
 		A68A19FA2A3A1A5F00B3010A = {
 			isa = PBXGroup;
 			children = (
@@ -64,31 +73,30 @@
 		A68A1A052A3A1A5F00B3010A /* TripPlan */ = {
 			isa = PBXGroup;
 			children = (
-				A68A1A1A2A3A1C5800B3010A /* MVP */,
+				A68A1A1A2A3A1C5800B3010A /* MVC */,
 				A68A1A0F2A3A1A6000B3010A /* Assets.xcassets */,
 				A68A1A142A3A1A6000B3010A /* Info.plist */,
 			);
 			path = TripPlan;
 			sourceTree = "<group>";
 		};
-		A68A1A1A2A3A1C5800B3010A /* MVP */ = {
+		A68A1A1A2A3A1C5800B3010A /* MVC */ = {
 			isa = PBXGroup;
 			children = (
-				A68A1A062A3A1A5F00B3010A /* AppDelegate.swift */,
-				A68A1A082A3A1A5F00B3010A /* SceneDelegate.swift */,
 				A68A1A1D2A3A1C7F00B3010A /* Model */,
 				A68A1A1C2A3A1C7000B3010A /* Views */,
-				A68A1A1B2A3A1C6300B3010A /* Presenter */,
+				A68A1A1B2A3A1C6300B3010A /* Controller */,
 			);
-			path = MVP;
+			path = MVC;
 			sourceTree = "<group>";
 		};
-		A68A1A1B2A3A1C6300B3010A /* Presenter */ = {
+		A68A1A1B2A3A1C6300B3010A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A68A1A222A3A1E5B00B3010A /* StationsPresenter.swift */,
+				A6190D592A3FA5CE0097ED5A /* DefaultManager */,
+				A68A1A222A3A1E5B00B3010A /* StationsManager.swift */,
 			);
-			path = Presenter;
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		A68A1A1C2A3A1C7000B3010A /* Views */ = {
@@ -97,7 +105,6 @@
 				A68A1A242A3A37DC00B3010A /* ListView */,
 				A68A1A0C2A3A1A5F00B3010A /* Main.storyboard */,
 				A68A1A112A3A1A6000B3010A /* LaunchScreen.storyboard */,
-				A68A1A0A2A3A1A5F00B3010A /* ViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -113,6 +120,7 @@
 		A68A1A242A3A37DC00B3010A /* ListView */ = {
 			isa = PBXGroup;
 			children = (
+				A68A1A0A2A3A1A5F00B3010A /* ViewController.swift */,
 				A68A1A202A3A1DA300B3010A /* TripsListViewController.swift */,
 				A68A1A252A3A380E00B3010A /* TripListViewTableViewCell.swift */,
 			);
@@ -196,7 +204,7 @@
 				A68A1A072A3A1A5F00B3010A /* AppDelegate.swift in Sources */,
 				A68A1A092A3A1A5F00B3010A /* SceneDelegate.swift in Sources */,
 				A68A1A262A3A380E00B3010A /* TripListViewTableViewCell.swift in Sources */,
-				A68A1A232A3A1E5B00B3010A /* StationsPresenter.swift in Sources */,
+				A68A1A232A3A1E5B00B3010A /* StationsManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,9 +349,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = Q5HDVMS6J7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TripPlan/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -358,6 +367,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.senakucukerdogan.TripPlan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -369,9 +379,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = Q5HDVMS6J7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TripPlan/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -386,6 +397,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.senakucukerdogan.TripPlan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -7,24 +7,27 @@
 
 import UIKit
 
+protocol TripListViewCellDelegate: AnyObject {
+    func bookButtonTapped(for cell: TripListViewTableViewCell)
+}
+
 class TripListViewTableViewCell: UITableViewCell {
 
     @IBOutlet weak var busNameLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     
+    weak var delegate: TripListViewCellDelegate?
     
     override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+        super.awakeFromNib()        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     @IBAction func bookButton(_ sender: Any) {
+        delegate?.bookButtonTapped(for: self)
     }
     
 
